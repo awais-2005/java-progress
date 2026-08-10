@@ -1,22 +1,26 @@
-# ClassLoader
+# JVM Architecture
+
+![JVM Diagram](JVM_diagram.png)
+
+## ClassLoader
 
 A ClassLoader is a component of JVM Architecture, that makes a class ready to use.
 
-## Types of ClassLoader
+### Types of ClassLoader
 - Bootstrap (loads Java internal class like String ArrayList, etc)
 - Platform/Extension (java 9+, loads classes of modules like java.sql)
 - Applications (loads classes you write)
 
-## ClassLoader Parent Delegation Model
+### ClassLoader Parent Delegation Model
 
 When write `java Main` is request for loading goes to `Application ClassLoader` but it passes the request to parent `Platform ClassLoader` before it tries itself. same this way `Platform ClassLoader` passes the request to `Bootsrap ClassLoader` if parent finds the class in its scope the request gets satisfied. And if parent fails to locate the class it returns the request to the child.
 
-## Steps of Class loading
+### Steps of Class loading
 1. Loading
 2. Linking
 3. Initialization
 
-### Loading
+#### Loading
 In this step ClassLoader:
 - locates a .class file, with fully qualified name, com.app.main.App, java.lang.String
 - loads it bytecode in byte[]
@@ -24,7 +28,7 @@ In this step ClassLoader:
 - stores that metadata in metaspace in form of data structure called InstanceKlass.
 - create a object of java.lang.Class, that contains reference to InstanceKlass, helps devs to read metadata.
 
-### Linking
+#### Linking
 This step performs three steps. verification, preparation, resolution.
 
 **Verification:**
@@ -36,18 +40,18 @@ In this step, JVM allcates memory for all static variable and set them to there 
 **Resolution:**
 Java compiler prepares constant pool and embeds it in .class file. this constant pool contains unique entries used in this class. some of them are literals (string/numeric) and some are symbolic references to a field, method or class. In this step JVM replaces those symbolic references in constant pool with direct references. This happen lazily on demand.
 
-### Initialization
+#### Initialization
 In this step, JVM invokes `<clinit>():V` function. which is built by javac (Java compiler) by combining all static variable initializers and static blocks.
 
 ---
 
-# Runtime Memory Areas
+## Runtime Memory Areas
 
 There are two type of memory areas:
 1. shared among thread (Method Area, Heap)
 2. private for each thread (Stack, PC Register, Native Method Stack)
 
-## Method Area - (premGen/Metaspace)
+### Method Area - (premGen/Metaspace)
 There are two Implementations of it:
 1. PermGen (pre Java 8)
 2. Metaspace (Java 8+)
@@ -63,14 +67,14 @@ It is current implementation, dynamic size. separate native memory not part of h
 - static variables
 - methods' bytecode
 
-## Heap
+### Heap
 - created at JVM start up.
 - stores Instances of class.
 - primary target of GC
 - divided into generations
 - OutOfMemoryError: when GC can't claim enough
 
-## Stack
+### Stack
 - Each thread gets its own Stack.
 - Keeps frames in it. (A frame is pushed when a method is called)
 - Frame is popped when method return.
@@ -81,20 +85,20 @@ A Frame contains:
 - operand stack
 - reference to constant pool of its class.
 
-## PC Register
+### PC Register
 - Very small in size
 - Just stores a reference to currently executing instructions
 - managed by Interpreter
 - remains undefined when a native method is being executed.
 
-## Native Method Stack
+### Native Method Stack
 - stack for native method calls
 - methods written in c/c++
 - or low level OS calls
 
 ---
 
-# Execution Engine
+## Execution Engine
 
 Three parts:
 
