@@ -120,3 +120,7 @@ Types of JIT compilers:
 
 **Garbage Collector:**
 - Reclaims memory from unreachable objects
+
+# Task
+
+I ran class with `-verbose:class` flag but it logged compact info means there was no information about classloaders yet I saw that JVM loads hundreds of classes before it ever touches my class. then I tried `-Xlog:class+load=debug` in its output I was able to see Classloader it was loaded by.
