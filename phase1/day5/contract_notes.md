@@ -1,6 +1,4 @@
-# equals(), hashCode(), and the Object Contract
-
-## The equals() Contract
+## equals(), hashCode(), and the Object Contract
 
 ### Why this is important?
 
@@ -26,7 +24,7 @@ If you override the `equals()`, your implementation must satisfy five properties
 - **Consistent:** multiple calls to `equals()` must return consistent result. if no fields used in comparison are changed.
 - **Non null:** `x.equals(null)` should always return false.
 
-## The hashCode() Contract
+### The hashCode() Contract
 
 - **Rule 1:** `hashCode()` must return same integer during one execution of application. until no equals() related fields changes.
 - **Rule 2:** hashCodes of equal objects must be equal
