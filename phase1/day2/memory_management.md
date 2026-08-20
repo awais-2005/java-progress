@@ -74,15 +74,15 @@ Three GC algorithms are stated below
 
 ### GC Cycles Types
 
-1. **Minor GC:** Runs in young generations using copying algorithm, takes all alive objects and copy them into empty servivor space and after this clean Eden and previously servivor space. runs frequently.
+1. **Minor GC:** Runs in young generations using copying algorithm, takes all alive objects and copy them into empty survivor space and after this clean Eden and previously survivor space. runs frequently.
 2. **Major GC:** Runs in old generation and apply Mark-Sweep-Compact algorithm.
 3. **Full GC:** it invokes Minor and Major GCs also invokes classunloader that unloads unreachable classes. rare, slow and expensive.
 
 ## Object Promotion
 
-At first objects are created in Eden then alive objects gets promoted to servivor space then alive objects keep bouncing between servivor spaces until their age counter hits threshold. Once it is hit, the objects is promoted to old generation. we can set that threshold with `-XX:MaxTenuringTreshold`
+At first objects are created in Eden then alive objects gets promoted to survivor space then alive objects keep bouncing between survivor spaces until their age counter hits threshold. Once it is hit, the objects is promoted to old generation. we can set that threshold with `-XX:MaxTenuringTreshold`
 
-**Early Promotion:** when servivor space overflows excess objects are directly promoted to Old Generation regardless of age called premature promotion. and very large objects may bypass young generation and get allocated directly in old generation. set size threshold `-XX:PretenureSizeThreshold`
+**Early Promotion:** when survivor space overflows excess objects are directly promoted to Old Generation regardless of age called premature promotion. and very large objects may bypass young generation and get allocated directly in old generation. set size threshold `-XX:PretenureSizeThreshold`
 
 ## Reference Types
 
@@ -102,4 +102,4 @@ It is a JIT C2 compiler optimization, where JIT verfies that an object created i
 
 I see how fast G1 handles young generation, It ran around 500 times per minute under extreme load, when I was performing mass allocation without storing their references.
 
-![Jconsole Overview](jconsole.png)
+![Jconsole Overview](Jconsole.png)

@@ -13,13 +13,13 @@ public class Person {
 
     @Override
     public int hashCode() {
-        return (this.CNIC.hashCode() / 31) * 17;
+        return this.CNIC.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Person p))
             return false;
-        return this.CNIC == p.CNIC;
+        return this.CNIC.equals(p.CNIC);
     }
 }
