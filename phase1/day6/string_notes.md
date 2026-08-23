@@ -18,7 +18,7 @@ String was still backed by `char[]` but `offset/count` got removed. New implemen
 
 ### In Java 9
 
-Storage implementation got changed from `char[]` to `byte[]`. and a field byte `coder`. if size of each character in string is 1 byte, implementation uses LATIN1 (1byte/char) and `coder is set to 0 to represent LATIN1` if any character in string require 2 bytes `coder is set to 0 to represent UTF16` takes (2bytes/char)
+Storage implementation got changed from `char[]` to `byte[]`. and a field byte `coder`. if size of each character in string is 1 byte, implementation uses LATIN1 (1byte/char) and `coder is set to 0 to represent LATIN1` if any character in string require 2 bytes `coder is set to 1 to represent UTF16` takes (2bytes/char)
 
 ## String Pool, Immutability & intern()
 
