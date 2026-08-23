@@ -10,9 +10,9 @@ public class BenchMark {
         stringBuilderTest(warmup);
         stringBufferTest(warmup);
 
-        float t1 = stringTest(interations);
-        float t2 = stringBuilderTest(interations);
-        float t3 = stringBufferTest(interations);
+        double t1 = stringTest(interations);
+        double t2 = stringBuilderTest(interations);
+        double t3 = stringBufferTest(interations);
 
         System.out.println("Time taken by String: %.3fms".formatted(t1));
         System.out.println("Time taken by StringBuilder: %.3fms".formatted(t2));
@@ -20,31 +20,31 @@ public class BenchMark {
 
     }
 
-    private static float stringTest(int iterations) {
+    private static double stringTest(int iterations) {
         String str = "";
         long startTime = System.nanoTime();
         for (int i = 0; i < iterations; i++) {
             str += "-";
         }
-        return (float) (System.nanoTime() - startTime) / 1_000_000;
+        return (System.nanoTime() - startTime) / 1_000_000.0;
     }
 
-    private static float stringBuilderTest(int iterations) {
+    private static double stringBuilderTest(int iterations) {
         StringBuilder str = new StringBuilder();
         long startTime = System.nanoTime();
         for (int i = 0; i < iterations; i++) {
             str.append("-");
         }
-        return (float) (System.nanoTime() - startTime) / 1_000_000;
+        return (System.nanoTime() - startTime) / 1_000_000.0;
     }
 
-    private static float stringBufferTest(int iterations) {
+    private static double stringBufferTest(int iterations) {
         StringBuffer str = new StringBuffer();
         long startTime = System.nanoTime();
         for (int i = 0; i < iterations; i++) {
             str.append("-");
         }
-        return (float) (System.nanoTime() - startTime) / 1_000_000;
+        return (System.nanoTime() - startTime) / 1_000_000.0;
     }
 
 }
