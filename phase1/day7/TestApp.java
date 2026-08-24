@@ -4,26 +4,25 @@ public class TestApp {
     public static void main(String[] args) {
 
         MyArrayList<String> names = new MyArrayList<>(1);
-
         names.add("Awais");
         names.add("Soma");
         names.add("Usama");
-        names.add("Maaz");
-        names.add("Saeed");
-        names.add("Tariq");
-
-        names.insert("Kabootar", 1);
 
         MyListIterator<String> itr = names.iterator();
+        int safetyCounter = 0;
+        int SAFETY_LIMIT = 20;
 
         while (itr.hasNext()) {
+            safetyCounter++;
+            if (safetyCounter > SAFETY_LIMIT) {
+                System.out.println("Exit from Infinite Loop!");
+                break;
+            }
             String n = itr.next();
-            if (n.equals("Awais") || n.equals("Usama")) {
-                itr.add("gap");
+            System.out.println(safetyCounter + ": next() returned \"" + n + "\", list size now " + names.length());
+            if (n.equals("Awais")) {
+                itr.add("Awais");
             }
         }
-        for (String name : names)
-            System.out.println(name);
     }
-
 }

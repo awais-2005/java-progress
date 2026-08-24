@@ -100,8 +100,7 @@ public class MyArrayList<T> implements Iterable<T> {
 
             public void add(T element) {
                 expectedModCount++;
-                MyArrayList.this.insert(element, cursor);
-                ;
+                MyArrayList.this.insert(element, cursor++);
             }
 
             public void remove() {
