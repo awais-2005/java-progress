@@ -1,6 +1,7 @@
 package phase1.day7;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 @SuppressWarnings({ "unchecked" })
@@ -8,6 +9,7 @@ public class MyArrayList<T> implements Iterable<T> {
     private final int DEFAULT_CAPACITY = 10;
     private Object[] elements;
     private int size = 0;
+    private int modCount = 0;
     private int totalCapacity;
 
     public MyArrayList() {
@@ -29,8 +31,9 @@ public class MyArrayList<T> implements Iterable<T> {
     }
 
     public void add(T element) {
+        modCount++;
         if (size + 1 == totalCapacity)
-            resize((int) (totalCapacity * 1.5));
+            resize();
         elements[size++] = element;
     }
 
@@ -49,24 +52,62 @@ public class MyArrayList<T> implements Iterable<T> {
         return totalCapacity;
     }
 
-    public void resize(int newCapacity) {
+    public void resize() {
+        int newCapacity = (int) (totalCapacity * 1.5) + 1;
         elements = Arrays.copyOf(elements, newCapacity);
         totalCapacity = newCapacity;
     }
 
+    public void insert(T element, int index) {
+        modCount++;
+        if (size + 1 == totalCapacity)
+            resize();
+        size++;
+        for (int i = size - 1; i >= index; i--) {
+            elements[i + 1] = elements[i];
+        }
+
+        elements[index] = element;
+    }
+
+    public void remove(int index) {
+        modCount++;
+        for (int i = index; i < size - 1; i++)
+            elements[i] = elements[i + 1];
+        size--;
+    }
+
     @Override
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
+    public MyListIterator<T> iterator() {
+        return new MyListIterator<T>() {
             int cursor = 0;
+            int expectedModCount = modCount;
 
             @Override
             public T next() {
+                checkExpectedModCount();
                 return get(cursor++);
             }
 
             @Override
             public boolean hasNext() {
                 return cursor < size;
+            }
+
+            private void checkExpectedModCount() {
+                if (modCount != expectedModCount)
+                    throw new ConcurrentModificationException();
+            }
+
+            public void add(T element) {
+                expectedModCount++;
+                MyArrayList.this.insert(element, cursor);
+                ;
+            }
+
+            public void remove() {
+                expectedModCount++;
+                MyArrayList.this.remove(--cursor);
             }
         };
     }
