@@ -84,13 +84,15 @@ public class MyArrayList<T> implements Iterable<T> {
 
             @Override
             public T next() {
-                checkExpectedModCount();
                 return get(cursor++);
             }
 
             @Override
             public boolean hasNext() {
-                return cursor < size;
+                if (cursor < size)
+                    return true;
+                checkExpectedModCount();
+                return false;
             }
 
             private void checkExpectedModCount() {

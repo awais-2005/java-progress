@@ -45,6 +45,7 @@
 - Iterator saves `modCount` as `expectedModCount` when created. Mismatch on `next()` → throws `ConcurrentModificationException`.
 - Classic bug: calling `list.remove()` directly inside a for-each loop → CME.
 - Gotcha: `hasNext()` doesn't check `modCount`. Removing the second-to-last item can end the loop silently, no exception thrown.
+- In my implementaion I fix this `gotcha`
 - Safe ways to remove while iterating: `Iterator.remove()`, `removeIf()`, `ListIterator`.
 - `CopyOnWriteArrayList` = fail-safe, not fail-fast. Copies the whole array on every write; old iterators just see the old snapshot. Good for read-heavy, rarely-written lists.
 
