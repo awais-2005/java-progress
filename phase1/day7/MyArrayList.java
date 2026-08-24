@@ -2,7 +2,6 @@ package phase1.day7;
 
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 
 @SuppressWarnings({ "unchecked" })
 public class MyArrayList<T> implements Iterable<T> {
