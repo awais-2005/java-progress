@@ -1,0 +1,1378 @@
+{
+  "title": "The Elite Backend Engineer",
+  "subtitle": "A 200-Day Java & Spring Boot Backend Mastery Roadmap",
+  "tagline": "From CRUD apps to distributed systems — day by day",
+  "meta": {
+    "total_duration_days": 200,
+    "phase_count": 13,
+    "daily_commitment": "2–3 focused hours",
+    "total_study_hours": "~475 hours",
+    "stack": [
+      "Java 21",
+      "Spring Boot 3",
+      "PostgreSQL",
+      "Redis",
+      "Kafka",
+      "Docker",
+      "Kubernetes"
+    ],
+    "starting_point": "Comfortable with basic CRUD apps, new to advanced backend concepts",
+    "end_state": "Production-grade distributed systems capstone + interview-ready depth"
+  },
+  "read_this_first": "No roadmap — 60 days or 600 — will make you outperform someone with a decade of real production experience. That kind of edge comes from things you can't cram: outages fixed at 3 a.m., scars from architecture decisions that didn't pan out, judgment built from hundreds of real trade-offs. That part of seniority only comes from time on the job. What this roadmap gives you instead is something you can control: a depth and breadth of technical knowledge — JVM internals, distributed systems, database engineering, security, system design — that most working engineers never deliberately study, even after years on the job. Follow this fully and you will out-know a large share of \"senior\" developers whose 10 years were 1 year of learning repeated 10 times. Combined with the capstone project and mock interviews at the end, you'll be able to prove it, not just claim it.",
+  "ground_rules": [
+    "Write code every day. Reading about a topic without typing it out doesn't count — build the practice task, don't just skim the theory.",
+    "Commit to GitHub daily, even small progress. A visible, consistent history is part of the proof of your skill.",
+    "From Day 29 onward, solve one DSA problem a day as a standing habit, in addition to that day's listed topic.",
+    "Keep a running technical journal: after each day, write 3–5 sentences explaining the concept in your own words (the Feynman technique). If you can't explain it simply, you don't know it yet.",
+    "2–3 hrs/day is the target, not a ceiling. If a day's topic is dense, let it bleed into the next day rather than rushing — this calendar assumes roughly 6 days/week with occasional slack, so treat 200 days as ~7–8 months elapsed, not a rigid sprint.",
+    "The 6 \"Checkpoint\" days and the Phase 13 capstone are non-negotiable. They're where scattered knowledge becomes a system you can defend under questioning."
+  ],
+  "environment_setup_before_day_1": [
+    "Install JDK 21 (LTS) and confirm with java -version.",
+    "Install IntelliJ IDEA (Community is fine to start).",
+    "Install Docker Desktop — you'll rely on it constantly from Phase 5 onward.",
+    "Install PostgreSQL locally (or via Docker) and a client such as DBeaver.",
+    "Install Postman or use IntelliJ's HTTP client for API testing.",
+    "Create a dedicated GitHub repo (or one per phase) to track daily commits."
+  ],
+  "phases": [
+    {
+      "phase_number": 1,
+      "title": "Java Core & Modern Java Mastery",
+      "days_range": "1–18",
+      "hours": 45,
+      "day_count": 18,
+      "description": "Most self-taught devs never go past \"Java syntax.\" This phase rebuilds Java from the JVM up — memory, concurrency, and collections internals — so you can reason about performance and bugs like an engineer, not guess like a coder.",
+      "days": [
+        {
+          "day": 1,
+          "focus_topic": "JVM Architecture Overview",
+          "what_to_learn": "Classloader subsystem; Runtime Data Areas (Heap, Stack, Method Area, PC Register, Native Stack); how .java becomes bytecode and executes.",
+          "practice_task": "Draw the JVM architecture from memory. Compile and run a class with -verbose:class and explain the output."
+        },
+        {
+          "day": 2,
+          "focus_topic": "Memory Management Deep Dive",
+          "what_to_learn": "Heap structure (Young/Old Gen, Eden, Survivor spaces); stack frames; escape analysis basics.",
+          "practice_task": "Write a small program and observe live heap behavior in VisualVM or JConsole."
+        },
+        {
+          "day": 3,
+          "focus_topic": "Garbage Collection Algorithms",
+          "what_to_learn": "Serial, Parallel, CMS, G1, ZGC — how each works and when it's chosen; key GC tuning flags.",
+          "practice_task": "Run a program with -Xlog:gc and interpret the GC log output line by line."
+        },
+        {
+          "day": 4,
+          "focus_topic": "Java Memory Model (JMM)",
+          "what_to_learn": "Happens-before relationship, visibility, instruction reordering, the volatile keyword's real guarantees.",
+          "practice_task": "Write a race-condition demo with a plain boolean flag across threads, then fix it with volatile."
+        },
+        {
+          "day": 5,
+          "focus_topic": "equals(), hashCode(), Object Contract",
+          "what_to_learn": "Why both must be overridden together; the hashCode contract; IdentityHashMap.",
+          "practice_task": "Implement a class with a correct equals/hashCode pair and unit tests that prove the contract holds."
+        },
+        {
+          "day": 6,
+          "focus_topic": "String Internals",
+          "what_to_learn": "String pool, immutability rationale, StringBuilder vs StringBuffer, intern().",
+          "practice_task": "Benchmark String concatenation vs StringBuilder over 100k iterations; explain the gap."
+        },
+        {
+          "day": 7,
+          "focus_topic": "Collections Internals I — Lists",
+          "what_to_learn": "ArrayList vs LinkedList internals, resizing strategy, fail-fast iterators and ConcurrentModificationException.",
+          "practice_task": "Implement a simplified ArrayList from scratch (add, get, resize)."
+        },
+        {
+          "day": 8,
+          "focus_topic": "Collections Internals II — Maps",
+          "what_to_learn": "HashMap internals: buckets, hashing, treeification (Java 8+), load factor, resize triggers.",
+          "practice_task": "Implement a simplified HashMap with put/get and chaining-based collision handling."
+        },
+        {
+          "day": 9,
+          "focus_topic": "Collections Internals III — Sorted & Ordered",
+          "what_to_learn": "TreeMap/TreeSet (red-black tree basis), Comparable vs Comparator, PriorityQueue.",
+          "practice_task": "Build a multi-field sorting pipeline using chained Comparators."
+        },
+        {
+          "day": 10,
+          "focus_topic": "Concurrent Collections",
+          "what_to_learn": "ConcurrentHashMap internals (segment/bin locking), CopyOnWriteArrayList, BlockingQueue.",
+          "practice_task": "Build a producer-consumer pipeline using BlockingQueue."
+        },
+        {
+          "day": 11,
+          "focus_topic": "Generics Deep Dive",
+          "what_to_learn": "Bounded types, wildcards (? extends / ? super), type erasure, the PECS principle.",
+          "practice_task": "Write a generic repository interface using correctly bounded types."
+        },
+        {
+          "day": 12,
+          "focus_topic": "Exception Handling Mastery",
+          "what_to_learn": "Checked vs unchecked, custom exception hierarchies, try-with-resources, exception chaining.",
+          "practice_task": "Design a full exception hierarchy for a banking domain."
+        },
+        {
+          "day": 13,
+          "focus_topic": "Functional Interfaces & Lambdas",
+          "what_to_learn": "Function, Supplier, Consumer, Predicate, BiFunction; method references.",
+          "practice_task": "Refactor five imperative loops into functional-style equivalents."
+        },
+        {
+          "day": 14,
+          "focus_topic": "Streams API I",
+          "what_to_learn": "map/filter/reduce, Collectors, grouping, partitioning.",
+          "practice_task": "Solve five data-transformation problems using only the Streams API."
+        },
+        {
+          "day": 15,
+          "focus_topic": "Streams API II",
+          "what_to_learn": "Parallel streams, the ForkJoinPool underneath, when parallel streams hurt more than help.",
+          "practice_task": "Benchmark a sequential vs parallel stream on a CPU-bound task and explain the result."
+        },
+        {
+          "day": 16,
+          "focus_topic": "Optional & Null Safety",
+          "what_to_learn": "Correct Optional usage patterns vs common anti-patterns (Optional as a field, get() without check).",
+          "practice_task": "Refactor null-check-heavy code to use Optional idiomatically."
+        },
+        {
+          "day": 17,
+          "focus_topic": "Multithreading Fundamentals",
+          "what_to_learn": "Thread vs Runnable, thread lifecycle, synchronized, wait/notify, intrinsic locks.",
+          "practice_task": "Build a thread-safe counter; first reproduce the race condition unsynchronized, then fix it."
+        },
+        {
+          "day": 18,
+          "focus_topic": "Concurrency Utilities",
+          "what_to_learn": "ExecutorService, Future, CompletableFuture, thread pool types, ReentrantLock, Semaphore, CountDownLatch.",
+          "practice_task": "Build a parallel API/file fetcher using ExecutorService + CompletableFuture composition."
+        }
+      ]
+    },
+    {
+      "phase_number": 2,
+      "title": "OOP Mastery, Design Patterns & Clean Code",
+      "days_range": "19–28",
+      "hours": 25,
+      "day_count": 10,
+      "description": "Senior engineers are distinguished by how they structure code, not just whether it runs. This phase builds the design vocabulary and instincts you'll use in every code review for the rest of your career.",
+      "days": [
+        {
+          "day": 19,
+          "focus_topic": "SOLID Principles I",
+          "what_to_learn": "Single Responsibility & Open/Closed, with before/after refactor examples.",
+          "practice_task": "Refactor a \"god class\" that violates SRP into cohesive collaborators."
+        },
+        {
+          "day": 20,
+          "focus_topic": "SOLID Principles II",
+          "what_to_learn": "Liskov Substitution, Interface Segregation, Dependency Inversion.",
+          "practice_task": "Refactor tightly-coupled classes to depend on abstractions (DIP) via interfaces."
+        },
+        {
+          "day": 21,
+          "focus_topic": "Creational Design Patterns",
+          "what_to_learn": "Singleton (thread-safe variants), Factory Method, Abstract Factory, Builder.",
+          "practice_task": "Implement a Builder for a complex multi-field Order object."
+        },
+        {
+          "day": 22,
+          "focus_topic": "Structural Design Patterns",
+          "what_to_learn": "Adapter, Decorator, Facade, Proxy.",
+          "practice_task": "Implement a Decorator chain for a notification system (Email/SMS/Push)."
+        },
+        {
+          "day": 23,
+          "focus_topic": "Behavioral Patterns I",
+          "what_to_learn": "Strategy, Observer, Command.",
+          "practice_task": "Implement the Strategy pattern for pluggable payment processing."
+        },
+        {
+          "day": 24,
+          "focus_topic": "Behavioral Patterns II",
+          "what_to_learn": "Template Method, Chain of Responsibility, State.",
+          "practice_task": "Implement a request-validation pipeline using Chain of Responsibility."
+        },
+        {
+          "day": 25,
+          "focus_topic": "Clean Code Principles",
+          "what_to_learn": "Naming, function size, comment discipline, common code smells and their fixes.",
+          "practice_task": "Refactor your existing CRUD app end-to-end applying clean-code rules."
+        },
+        {
+          "day": 26,
+          "focus_topic": "Domain-Driven Design — Building Blocks",
+          "what_to_learn": "Entities, Value Objects, Aggregates, Repositories, Bounded Contexts.",
+          "practice_task": "Model an e-commerce order domain using DDD building blocks on paper."
+        },
+        {
+          "day": 27,
+          "focus_topic": "Architectural Layering",
+          "what_to_learn": "Layered architecture vs Hexagonal (Ports & Adapters); why dependency direction matters.",
+          "practice_task": "Sketch a hexagonal architecture diagram for your CRUD app."
+        },
+        {
+          "day": 28,
+          "focus_topic": "DSA Warm-Up",
+          "what_to_learn": "Big-O refresher; array/string/hash-map problem patterns.",
+          "practice_task": "Solve 3 medium array/hash-map problems (LeetCode or similar)."
+        }
+      ]
+    },
+    {
+      "phase_number": 3,
+      "title": "DSA Sprint: Applied Problem Solving",
+      "days_range": "29–35",
+      "hours": 18,
+      "day_count": 7,
+      "description": "You don't need to be a competitive programmer, but a senior backend engineer who can't reason about complexity or traverse a graph loses every technical interview and every \"why is this endpoint slow\" debugging session. This is the core toolkit — after Day 35, keep solving one problem a day as a standing habit through the rest of the roadmap.",
+      "days": [
+        {
+          "day": 29,
+          "focus_topic": "Recursion & Backtracking",
+          "what_to_learn": "Call-stack mental model, base cases, backtracking template.",
+          "practice_task": "Solve 2 recursion/backtracking problems."
+        },
+        {
+          "day": 30,
+          "focus_topic": "Sorting Algorithms",
+          "what_to_learn": "Merge sort and quicksort implementations; when each is preferred; complexity proofs.",
+          "practice_task": "Implement quicksort and mergesort from scratch."
+        },
+        {
+          "day": 31,
+          "focus_topic": "Trees",
+          "what_to_learn": "Binary trees, BSTs, DFS/BFS traversals.",
+          "practice_task": "Implement BST insert/search/delete plus a level-order traversal."
+        },
+        {
+          "day": 32,
+          "focus_topic": "Graphs I",
+          "what_to_learn": "Adjacency list vs matrix; BFS and DFS.",
+          "practice_task": "Implement graph BFS/DFS and solve a connected-components style problem."
+        },
+        {
+          "day": 33,
+          "focus_topic": "Graphs II",
+          "what_to_learn": "Dijkstra's algorithm; topological sort.",
+          "practice_task": "Implement Dijkstra's algorithm on a weighted graph."
+        },
+        {
+          "day": 34,
+          "focus_topic": "Heaps & Priority Queues",
+          "what_to_learn": "Heap operations; top-K problem pattern.",
+          "practice_task": "Solve 2 heap-based problems (e.g. k largest elements, merge k lists)."
+        },
+        {
+          "day": 35,
+          "focus_topic": "Sliding Window & Two Pointers",
+          "what_to_learn": "Recognizing and applying both patterns.",
+          "practice_task": "Solve 3 problems using sliding window / two pointers."
+        }
+      ]
+    },
+    {
+      "phase_number": 4,
+      "title": "Spring Framework Core & Spring Boot",
+      "days_range": "36–55",
+      "hours": 55,
+      "day_count": 20,
+      "description": "This is where you stop treating Spring as magic. You'll understand what the container is actually doing, then use that understanding to build a properly layered, production-shaped REST API.",
+      "days": [
+        {
+          "day": 36,
+          "focus_topic": "IoC & Dependency Injection Theory",
+          "what_to_learn": "Why DI matters; constructor vs field vs setter injection and why constructor injection wins.",
+          "practice_task": "Convert a manually-wired class graph in your CRUD app to use DI."
+        },
+        {
+          "day": 37,
+          "focus_topic": "Spring IoC Container",
+          "what_to_learn": "ApplicationContext vs BeanFactory; bean lifecycle; scopes (singleton/prototype/request/session).",
+          "practice_task": "Define custom @Bean methods; observe lifecycle with @PostConstruct/@PreDestroy."
+        },
+        {
+          "day": 38,
+          "focus_topic": "Spring Boot Autoconfiguration",
+          "what_to_learn": "How @SpringBootApplication resolves; starters; @ConditionalOnProperty and friends.",
+          "practice_task": "Write a minimal custom autoconfiguration class."
+        },
+        {
+          "day": 39,
+          "focus_topic": "Configuration Management",
+          "what_to_learn": "application.yml/properties, @Profile, @ConfigurationProperties, externalized config.",
+          "practice_task": "Set up dev/staging/prod profiles for a project."
+        },
+        {
+          "day": 40,
+          "focus_topic": "Spring MVC Architecture",
+          "what_to_learn": "DispatcherServlet, HandlerMapping, full request lifecycle.",
+          "practice_task": "Trace one request end-to-end with logs/breakpoints through the MVC layers."
+        },
+        {
+          "day": 41,
+          "focus_topic": "Building REST Controllers",
+          "what_to_learn": "@RestController, mapping annotations, path variables, request params.",
+          "practice_task": "Build a full CRUD REST API for a new domain (e.g. a library system)."
+        },
+        {
+          "day": 42,
+          "focus_topic": "Request Validation",
+          "what_to_learn": "Bean Validation (@Valid, @NotNull, custom validators), validation groups.",
+          "practice_task": "Add layered validation to Day 41's API."
+        },
+        {
+          "day": 43,
+          "focus_topic": "Global Exception Handling",
+          "what_to_learn": "@ControllerAdvice, @ExceptionHandler, RFC 7807 Problem Details responses.",
+          "practice_task": "Build a centralized, consistent error-handling layer."
+        },
+        {
+          "day": 44,
+          "focus_topic": "DTO Pattern & Object Mapping",
+          "what_to_learn": "Why entities shouldn't leave the service layer; MapStruct for mapping.",
+          "practice_task": "Add a DTO layer with MapStruct to your API."
+        },
+        {
+          "day": 45,
+          "focus_topic": "Aspect-Oriented Programming",
+          "what_to_learn": "Cross-cutting concerns, @Aspect, pointcut expressions, advice types.",
+          "practice_task": "Build a logging/execution-time aspect for service methods."
+        },
+        {
+          "day": 46,
+          "focus_topic": "Custom Validation Annotations",
+          "what_to_learn": "Building your own Bean Validation constraints.",
+          "practice_task": "Write a custom annotation, e.g. @ValidPhoneNumber, with its ConstraintValidator."
+        },
+        {
+          "day": 47,
+          "focus_topic": "Spring Boot Actuator",
+          "what_to_learn": "Health checks, metrics endpoints, building custom actuator endpoints.",
+          "practice_task": "Enable and customize Actuator on your project."
+        },
+        {
+          "day": 48,
+          "focus_topic": "API Versioning Strategies",
+          "what_to_learn": "URI, header, and media-type versioning trade-offs.",
+          "practice_task": "Implement two versioning strategies on the same endpoint."
+        },
+        {
+          "day": 49,
+          "focus_topic": "File Handling",
+          "what_to_learn": "Multipart requests, file upload/download, validation of uploaded content.",
+          "practice_task": "Add a validated file-upload endpoint."
+        },
+        {
+          "day": 50,
+          "focus_topic": "Scheduling & Async",
+          "what_to_learn": "@Scheduled, @Async, thread-pool configuration for async tasks.",
+          "practice_task": "Add a scheduled job and an async mock email-sending flow."
+        },
+        {
+          "day": 51,
+          "focus_topic": "Internationalization",
+          "what_to_learn": "i18n/l10n basics, MessageSource, locale resolution.",
+          "practice_task": "Add multi-language validation/error messages."
+        },
+        {
+          "day": 52,
+          "focus_topic": "Project Structure Best Practices",
+          "what_to_learn": "Package-by-feature vs package-by-layer; where it breaks down at scale.",
+          "practice_task": "Restructure your project using package-by-feature."
+        },
+        {
+          "day": 53,
+          "focus_topic": "Logging Best Practices",
+          "what_to_learn": "SLF4J, Logback config, structured logging, correlation IDs via MDC.",
+          "practice_task": "Set up structured JSON logging with a request correlation ID."
+        },
+        {
+          "day": 54,
+          "focus_topic": "Centralized Config Basics",
+          "what_to_learn": "Spring Cloud Config Server concept and a local setup.",
+          "practice_task": "Externalize one service's config to a local config server."
+        },
+        {
+          "day": 55,
+          "focus_topic": "Checkpoint Build",
+          "what_to_learn": "Consolidate everything from this phase into one cohesive service.",
+          "practice_task": "Build a complete Task Management REST API applying every Phase 4 topic; self-review it."
+        }
+      ]
+    },
+    {
+      "phase_number": 5,
+      "title": "Data Persistence Mastery",
+      "days_range": "56–78",
+      "hours": 60,
+      "day_count": 23,
+      "description": "Most bugs and outages in real backend systems are data problems: bad queries, N+1s, lock contention, unsafe migrations. This phase goes deep on SQL, transactions, and JPA/Hibernate internals — the single highest-leverage topic area for interviews and production alike.",
+      "days": [
+        {
+          "day": 56,
+          "focus_topic": "Relational Modeling Refresher",
+          "what_to_learn": "Normalization (1NF–3NF), ER modeling.",
+          "practice_task": "Design a normalized schema for an e-commerce system."
+        },
+        {
+          "day": 57,
+          "focus_topic": "SQL Deep Dive I",
+          "what_to_learn": "Joins (inner/outer/cross), subqueries, CTEs.",
+          "practice_task": "Write 10 non-trivial queries against a sample database."
+        },
+        {
+          "day": 58,
+          "focus_topic": "SQL Deep Dive II",
+          "what_to_learn": "Window functions, aggregates, GROUP BY/HAVING nuances.",
+          "practice_task": "Solve 5 analytics-style SQL problems using window functions."
+        },
+        {
+          "day": 59,
+          "focus_topic": "Indexing Deep Dive",
+          "what_to_learn": "B-Tree indexes, composite indexes, covering indexes, when indexes hurt writes.",
+          "practice_task": "Use EXPLAIN ANALYZE to optimize 3 deliberately slow queries."
+        },
+        {
+          "day": 60,
+          "focus_topic": "Query Optimization",
+          "what_to_learn": "Reading execution plans; spotting sequential scans and bad joins.",
+          "practice_task": "Profile and rewrite a query with a poor execution plan."
+        },
+        {
+          "day": 61,
+          "focus_topic": "Transactions & ACID",
+          "what_to_learn": "Atomicity, consistency, isolation, durability with concrete examples.",
+          "practice_task": "Write code that demonstrates a transaction rollback on failure."
+        },
+        {
+          "day": 62,
+          "focus_topic": "Isolation Levels & Concurrency",
+          "what_to_learn": "Dirty/non-repeatable/phantom reads; MVCC.",
+          "practice_task": "Reproduce a race condition at READ_COMMITTED, then fix it at SERIALIZABLE."
+        },
+        {
+          "day": 63,
+          "focus_topic": "JDBC Fundamentals",
+          "what_to_learn": "Connection, PreparedStatement, ResultSet — what the ORM hides from you.",
+          "practice_task": "Write a query using raw JDBC, no ORM."
+        },
+        {
+          "day": 64,
+          "focus_topic": "Connection Pooling",
+          "what_to_learn": "HikariCP configuration and pool-sizing math.",
+          "practice_task": "Tune HikariCP pool size for a simulated load scenario."
+        },
+        {
+          "day": 65,
+          "focus_topic": "JPA & Hibernate Fundamentals",
+          "what_to_learn": "Entity mapping, @Id strategies, EntityManager, the Persistence Context.",
+          "practice_task": "Map your Day 55 project's entities with JPA."
+        },
+        {
+          "day": 66,
+          "focus_topic": "JPA Relationships",
+          "what_to_learn": "@OneToMany, @ManyToOne, @ManyToMany; LAZY vs EAGER fetching.",
+          "practice_task": "Model entity relationships correctly, avoiding bidirectional pitfalls."
+        },
+        {
+          "day": 67,
+          "focus_topic": "Hibernate Internals",
+          "what_to_learn": "First- vs second-level cache, dirty checking, flush modes.",
+          "practice_task": "Demonstrate dirty checking behavior with debug logging."
+        },
+        {
+          "day": 68,
+          "focus_topic": "The N+1 Query Problem",
+          "what_to_learn": "Detection and fixes: JOIN FETCH, @EntityGraph, batch fetching.",
+          "practice_task": "Find and fix a real N+1 in your project."
+        },
+        {
+          "day": 69,
+          "focus_topic": "Spring Data JPA",
+          "what_to_learn": "Repositories, derived query methods, @Query, native queries.",
+          "practice_task": "Replace manual JPA code with Spring Data repositories."
+        },
+        {
+          "day": 70,
+          "focus_topic": "JPA Specifications & Criteria API",
+          "what_to_learn": "Building type-safe dynamic queries.",
+          "practice_task": "Build a dynamic multi-filter search endpoint using Specifications."
+        },
+        {
+          "day": 71,
+          "focus_topic": "Pagination Done Right",
+          "what_to_learn": "Pageable/Page/Slice; offset pagination's cost at depth; keyset pagination.",
+          "practice_task": "Implement both offset and keyset pagination; compare their performance."
+        },
+        {
+          "day": 72,
+          "focus_topic": "Database Migrations",
+          "what_to_learn": "Flyway vs Liquibase; versioned, reversible migrations.",
+          "practice_task": "Set up Flyway migrations for your project."
+        },
+        {
+          "day": 73,
+          "focus_topic": "Auditing",
+          "what_to_learn": "@CreatedDate/@LastModifiedBy, history tracking with Envers.",
+          "practice_task": "Add auditing fields to your core entities."
+        },
+        {
+          "day": 74,
+          "focus_topic": "Optimistic vs Pessimistic Locking",
+          "what_to_learn": "@Version-based optimistic locking; SELECT FOR UPDATE.",
+          "practice_task": "Simulate concurrent updates; implement optimistic locking to prevent lost updates."
+        },
+        {
+          "day": 75,
+          "focus_topic": "NoSQL Fundamentals",
+          "what_to_learn": "SQL vs NoSQL trade-offs; document/key-value/column/graph store types.",
+          "practice_task": "Compare 3 use cases and justify a SQL vs NoSQL choice for each."
+        },
+        {
+          "day": 76,
+          "focus_topic": "Redis Fundamentals",
+          "what_to_learn": "Data structures (String, Hash, List, Set, ZSet), TTL, common use cases.",
+          "practice_task": "Set up Redis locally; practice CRUD via redis-cli."
+        },
+        {
+          "day": 77,
+          "focus_topic": "MongoDB Fundamentals",
+          "what_to_learn": "Documents/collections; schema design differences from relational modeling.",
+          "practice_task": "Model the same domain in MongoDB and in SQL; compare the trade-offs."
+        },
+        {
+          "day": 78,
+          "focus_topic": "Checkpoint Build",
+          "what_to_learn": "Full persistence layer with caching.",
+          "practice_task": "Add Postgres persistence + Redis caching to your Task Management API; benchmark before/after."
+        }
+      ]
+    },
+    {
+      "phase_number": 6,
+      "title": "API Design, Testing & Quality",
+      "days_range": "79–95",
+      "hours": 45,
+      "day_count": 17,
+      "description": "A senior engineer's APIs are predictable, well-documented, and covered by tests that actually catch regressions. This phase builds that discipline so your code is trustworthy, not just functional.",
+      "days": [
+        {
+          "day": 79,
+          "focus_topic": "REST Design Principles",
+          "what_to_learn": "Resource naming, correct HTTP verbs/status codes, idempotency semantics.",
+          "practice_task": "Audit and fix your API's REST compliance."
+        },
+        {
+          "day": 80,
+          "focus_topic": "HATEOAS & Richardson Maturity",
+          "what_to_learn": "What each maturity level buys you; when HATEOAS is worth the complexity.",
+          "practice_task": "Add HATEOAS links to one resource."
+        },
+        {
+          "day": 81,
+          "focus_topic": "API Documentation",
+          "what_to_learn": "OpenAPI/Swagger via springdoc; writing docs a stranger could use.",
+          "practice_task": "Fully document your API with OpenAPI annotations."
+        },
+        {
+          "day": 82,
+          "focus_topic": "Filtering, Sorting & Search Design",
+          "what_to_learn": "Patterns for robust list endpoints with multiple optional filters.",
+          "practice_task": "Build a search endpoint supporting multiple combinable filters."
+        },
+        {
+          "day": 83,
+          "focus_topic": "Rate Limiting Concepts",
+          "what_to_learn": "Token bucket, leaky bucket, fixed/sliding window algorithms.",
+          "practice_task": "Implement a simple in-memory rate limiter."
+        },
+        {
+          "day": 84,
+          "focus_topic": "Idempotency in APIs",
+          "what_to_learn": "Idempotency keys; safe-retry design for POST requests.",
+          "practice_task": "Add idempotency-key support to a POST endpoint."
+        },
+        {
+          "day": 85,
+          "focus_topic": "Testing Strategy",
+          "what_to_learn": "The testing pyramid; unit vs integration vs e2e; coverage philosophy.",
+          "practice_task": "Write a one-page testing strategy for your project."
+        },
+        {
+          "day": 86,
+          "focus_topic": "JUnit 5 Deep Dive",
+          "what_to_learn": "Lifecycle annotations, parameterized tests, assertion styles.",
+          "practice_task": "Write unit tests for your service layer, targeting 80%+ coverage."
+        },
+        {
+          "day": 87,
+          "focus_topic": "Mockito Deep Dive",
+          "what_to_learn": "Mocking, stubbing, verification, argument captors.",
+          "practice_task": "Mock repository/external dependencies in your service tests."
+        },
+        {
+          "day": 88,
+          "focus_topic": "Integration Testing",
+          "what_to_learn": "@SpringBootTest, MockMvc, WebTestClient.",
+          "practice_task": "Write integration tests for your controllers."
+        },
+        {
+          "day": 89,
+          "focus_topic": "Testcontainers",
+          "what_to_learn": "Running a real Postgres/Redis in tests via Docker instead of H2.",
+          "practice_task": "Replace in-memory test doubles with Testcontainers-backed Postgres."
+        },
+        {
+          "day": 90,
+          "focus_topic": "Contract Testing Basics",
+          "what_to_learn": "Consumer-driven contracts (Spring Cloud Contract / Pact concept).",
+          "practice_task": "Write a simple consumer-driven contract test."
+        },
+        {
+          "day": 91,
+          "focus_topic": "Test-Driven Development",
+          "what_to_learn": "Red-green-refactor in practice.",
+          "practice_task": "Build one new feature strictly via TDD."
+        },
+        {
+          "day": 92,
+          "focus_topic": "Static Analysis & Coverage",
+          "what_to_learn": "JaCoCo, SonarLint/SonarQube, common code smells they catch.",
+          "practice_task": "Run static analysis on your project and fix the top issues."
+        },
+        {
+          "day": 93,
+          "focus_topic": "Standardized Error Contracts",
+          "what_to_learn": "Consistent RFC 7807 error responses across an entire API surface.",
+          "practice_task": "Standardize every error response in your project to one contract."
+        },
+        {
+          "day": 94,
+          "focus_topic": "API Performance Basics",
+          "what_to_learn": "Response compression, keep-alive, payload-size discipline.",
+          "practice_task": "Measure and reduce the response size/time of a heavy endpoint."
+        },
+        {
+          "day": 95,
+          "focus_topic": "Checkpoint",
+          "what_to_learn": "Consolidate testing and documentation.",
+          "practice_task": "Bring your project to a full test suite + complete Swagger docs + clean static-analysis report."
+        }
+      ]
+    },
+    {
+      "phase_number": 7,
+      "title": "Security Engineering",
+      "days_range": "96–108",
+      "hours": 35,
+      "day_count": 13,
+      "description": "Most \"backend developers\" bolt on auth and hope. This phase makes security a design discipline: you'll understand the mechanisms well enough to defend design choices, not just copy a tutorial.",
+      "days": [
+        {
+          "day": 96,
+          "focus_topic": "Security Fundamentals",
+          "what_to_learn": "Authentication vs authorization; common attack vectors, overview.",
+          "practice_task": "List the current attack surface of your API."
+        },
+        {
+          "day": 97,
+          "focus_topic": "Spring Security Architecture",
+          "what_to_learn": "The filter chain, SecurityContext, AuthenticationManager.",
+          "practice_task": "Add basic Spring Security to your project and trace a request through the filter chain."
+        },
+        {
+          "day": 98,
+          "focus_topic": "Password Security",
+          "what_to_learn": "Hashing with BCrypt, salting, why you never roll your own crypto.",
+          "practice_task": "Implement secure registration/login with BCrypt password hashing."
+        },
+        {
+          "day": 99,
+          "focus_topic": "Session vs Token Auth",
+          "what_to_learn": "Trade-offs of stateful sessions vs stateless tokens for horizontal scaling.",
+          "practice_task": "Document both approaches and justify one for your use case."
+        },
+        {
+          "day": 100,
+          "focus_topic": "JWT Deep Dive",
+          "what_to_learn": "Header/payload/signature structure, signing algorithms, expiry, refresh tokens.",
+          "practice_task": "Implement JWT auth with access + refresh tokens."
+        },
+        {
+          "day": 101,
+          "focus_topic": "OAuth2 & OIDC Fundamentals",
+          "what_to_learn": "Authorization code flow, client credentials flow, Auth Server vs Resource Server roles.",
+          "practice_task": "Diagram OAuth2 flows for a web app and a machine-to-machine scenario."
+        },
+        {
+          "day": 102,
+          "focus_topic": "OAuth2 Resource Server",
+          "what_to_learn": "Validating JWTs from an external identity provider (e.g. Keycloak).",
+          "practice_task": "Run Keycloak locally and secure an endpoint against it."
+        },
+        {
+          "day": 103,
+          "focus_topic": "Method-Level Security & RBAC",
+          "what_to_learn": "@PreAuthorize, @Secured, role- and permission-based access control.",
+          "practice_task": "Implement role-based access control across your endpoints."
+        },
+        {
+          "day": 104,
+          "focus_topic": "CORS & CSRF",
+          "what_to_learn": "What each protects against; correct configuration; common misconfigurations.",
+          "practice_task": "Correctly configure CORS for a separate frontend origin."
+        },
+        {
+          "day": 105,
+          "focus_topic": "OWASP Top 10 Applied",
+          "what_to_learn": "SQL injection, XSS, broken access control, SSRF — with Java-specific fixes.",
+          "practice_task": "Audit your project against an OWASP Top 10 checklist."
+        },
+        {
+          "day": 106,
+          "focus_topic": "Secrets Management",
+          "what_to_learn": "Why secrets never belong in code; env vars; intro to Vault.",
+          "practice_task": "Move every hardcoded secret out of your codebase."
+        },
+        {
+          "day": 107,
+          "focus_topic": "API Hardening",
+          "what_to_learn": "HTTPS enforcement, security headers, input sanitization.",
+          "practice_task": "Add HSTS, CSP, and X-Frame-Options headers to your app."
+        },
+        {
+          "day": 108,
+          "focus_topic": "Checkpoint",
+          "what_to_learn": "Full security pass.",
+          "practice_task": "Run a full self-audit / pen-test-style review of your project and fix every finding."
+        }
+      ]
+    },
+    {
+      "phase_number": 8,
+      "title": "Caching, Messaging & Async Architecture",
+      "days_range": "109–122",
+      "hours": 38,
+      "day_count": 14,
+      "description": "This is where you learn to design systems that don't do everything synchronously and in-process — the shift from \"an API\" to \"a system.\"",
+      "days": [
+        {
+          "day": 109,
+          "focus_topic": "Caching Strategies",
+          "what_to_learn": "Cache-aside, write-through, write-behind; TTL and eviction policies.",
+          "practice_task": "Write a caching-strategy doc for one read-heavy endpoint."
+        },
+        {
+          "day": 110,
+          "focus_topic": "Spring Cache Abstraction",
+          "what_to_learn": "@Cacheable, @CacheEvict, @CachePut backed by Redis.",
+          "practice_task": "Add caching to your most-read endpoint and benchmark the improvement."
+        },
+        {
+          "day": 111,
+          "focus_topic": "Cache Invalidation Problems",
+          "what_to_learn": "Stale data, thundering herd, cache stampede prevention.",
+          "practice_task": "Implement a stampede-prevention technique (lock or jitter) for a hot cache key."
+        },
+        {
+          "day": 112,
+          "focus_topic": "Distributed Caching Considerations",
+          "what_to_learn": "Cache consistency across multiple app instances.",
+          "practice_task": "Document a cache-consistency strategy for a multi-instance deployment."
+        },
+        {
+          "day": 113,
+          "focus_topic": "Message Queues Fundamentals",
+          "what_to_learn": "Why async messaging; pub/sub vs point-to-point; delivery guarantees overview.",
+          "practice_task": "Diagram one workflow in your project that would benefit from async messaging."
+        },
+        {
+          "day": 114,
+          "focus_topic": "RabbitMQ Fundamentals",
+          "what_to_learn": "Exchanges, queues, bindings, routing keys.",
+          "practice_task": "Send and receive a message locally via Spring AMQP."
+        },
+        {
+          "day": 115,
+          "focus_topic": "Kafka Fundamentals I",
+          "what_to_learn": "Topics, partitions, brokers, producers/consumers.",
+          "practice_task": "Set up Kafka locally and produce/consume a test message."
+        },
+        {
+          "day": 116,
+          "focus_topic": "Kafka Fundamentals II",
+          "what_to_learn": "Consumer groups, offset management, delivery guarantees.",
+          "practice_task": "Build a Spring Kafka producer + consumer for an order-events flow."
+        },
+        {
+          "day": 117,
+          "focus_topic": "Event-Driven Architecture Patterns",
+          "what_to_learn": "Event notification vs event-carried state transfer; choreography vs orchestration.",
+          "practice_task": "Redesign one feature of your project as event-driven."
+        },
+        {
+          "day": 118,
+          "focus_topic": "Outbox Pattern",
+          "what_to_learn": "The dual-write problem; guaranteeing DB + message consistency.",
+          "practice_task": "Implement the transactional outbox pattern for one write path."
+        },
+        {
+          "day": 119,
+          "focus_topic": "Async Processing in Spring",
+          "what_to_learn": "@Async internals, thread-pool tuning, error handling in async methods.",
+          "practice_task": "Convert a slow synchronous flow to async and handle its failure path."
+        },
+        {
+          "day": 120,
+          "focus_topic": "Reactive Programming Intro",
+          "what_to_learn": "Reactive Streams; Mono/Flux with WebFlux; when reactive helps vs hurts.",
+          "practice_task": "Rewrite one endpoint with WebFlux and compare it to the blocking version."
+        },
+        {
+          "day": 121,
+          "focus_topic": "Backpressure & Reactive Pitfalls",
+          "what_to_learn": "Handling producers faster than consumers in a reactive pipeline.",
+          "practice_task": "Summarize 3 backpressure strategies and where each applies."
+        },
+        {
+          "day": 122,
+          "focus_topic": "Checkpoint",
+          "what_to_learn": "Wire messaging and caching together end to end.",
+          "practice_task": "Add Kafka event publishing + Redis caching to your Task Management project."
+        }
+      ]
+    },
+    {
+      "phase_number": 9,
+      "title": "Microservices & Distributed Systems",
+      "days_range": "123–140",
+      "hours": 48,
+      "day_count": 18,
+      "description": "This phase is the real gap between mid-level and senior: reasoning about systems that fail partially, communicate over unreliable networks, and must stay consistent without a single transaction to rely on.",
+      "days": [
+        {
+          "day": 123,
+          "focus_topic": "Monolith vs Microservices",
+          "what_to_learn": "Real trade-offs; when NOT to use microservices; monolith-first thinking.",
+          "practice_task": "Write a decision doc: would your project genuinely benefit from microservices?"
+        },
+        {
+          "day": 124,
+          "focus_topic": "Service Decomposition",
+          "what_to_learn": "By business capability, DDD bounded contexts, the strangler fig pattern.",
+          "practice_task": "Decompose your monolith into candidate services on paper."
+        },
+        {
+          "day": 125,
+          "focus_topic": "Inter-Service Communication",
+          "what_to_learn": "Sync (REST/gRPC) vs async (events) — trade-offs per interaction type.",
+          "practice_task": "Choose and justify a communication style for two specific service interactions."
+        },
+        {
+          "day": 126,
+          "focus_topic": "gRPC Fundamentals",
+          "what_to_learn": "Protobuf, unary vs streaming calls, trade-offs vs REST.",
+          "practice_task": "Build a simple gRPC service and client."
+        },
+        {
+          "day": 127,
+          "focus_topic": "Service Discovery",
+          "what_to_learn": "Client-side vs server-side discovery; Eureka basics.",
+          "practice_task": "Set up Eureka and register two services."
+        },
+        {
+          "day": 128,
+          "focus_topic": "API Gateway Pattern",
+          "what_to_learn": "Routing, and centralizing auth/rate-limiting at the edge with Spring Cloud Gateway.",
+          "practice_task": "Set up a gateway that routes to your services."
+        },
+        {
+          "day": 129,
+          "focus_topic": "Centralized Configuration",
+          "what_to_learn": "Spring Cloud Config Server; dynamic config refresh.",
+          "practice_task": "Externalize configuration for multiple services through one config server."
+        },
+        {
+          "day": 130,
+          "focus_topic": "Resilience Patterns — Theory",
+          "what_to_learn": "Circuit breaker states (closed/open/half-open) and why they exist.",
+          "practice_task": "Explain a circuit breaker's behavior using a real failure scenario from your system."
+        },
+        {
+          "day": 131,
+          "focus_topic": "Resilience4j Implementation",
+          "what_to_learn": "CircuitBreaker, Retry, RateLimiter, Bulkhead annotations.",
+          "practice_task": "Add resilience patterns around a service-to-service call."
+        },
+        {
+          "day": 132,
+          "focus_topic": "Distributed Transactions",
+          "what_to_learn": "2PC's limitations; the Saga pattern (choreography vs orchestration).",
+          "practice_task": "Design a Saga for a multi-service checkout flow."
+        },
+        {
+          "day": 133,
+          "focus_topic": "Idempotency at Scale",
+          "what_to_learn": "Exactly-once semantics in a distributed system; idempotent event handlers.",
+          "practice_task": "Design idempotent event handlers for your Saga."
+        },
+        {
+          "day": 134,
+          "focus_topic": "Distributed Tracing",
+          "what_to_learn": "Trace-context propagation; Micrometer Tracing; Zipkin/Jaeger.",
+          "practice_task": "Add distributed tracing across two services and inspect one full trace."
+        },
+        {
+          "day": 135,
+          "focus_topic": "CAP Theorem & Consistency Models",
+          "what_to_learn": "Strong vs eventual consistency; PACELC.",
+          "practice_task": "Classify 3 real systems (bank ledger, social feed, DNS) by consistency model, with reasoning."
+        },
+        {
+          "day": 136,
+          "focus_topic": "Consensus Algorithms — Overview",
+          "what_to_learn": "Why consensus matters; Raft leader election conceptually; ZooKeeper/etcd use cases.",
+          "practice_task": "Summarize Raft leader election in your own words, with a diagram."
+        },
+        {
+          "day": 137,
+          "focus_topic": "Distributed Locking",
+          "what_to_learn": "The Redlock algorithm; when you actually need a distributed lock.",
+          "practice_task": "Implement a distributed lock using Redis (SETNX or Redisson)."
+        },
+        {
+          "day": 138,
+          "focus_topic": "Data Sharding & Partitioning",
+          "what_to_learn": "Range-based, hash-based, and directory-based sharding.",
+          "practice_task": "Design a sharding strategy for a large \"users\" table."
+        },
+        {
+          "day": 139,
+          "focus_topic": "Database Replication",
+          "what_to_learn": "Leader-follower replication, read replicas, replication lag handling.",
+          "practice_task": "Document a read/write splitting strategy for your application."
+        },
+        {
+          "day": 140,
+          "focus_topic": "Checkpoint",
+          "what_to_learn": "Split the monolith for real.",
+          "practice_task": "Split your project into 2 microservices communicating via REST + Kafka, behind a gateway with service discovery."
+        }
+      ]
+    },
+    {
+      "phase_number": 10,
+      "title": "DevOps, Containers & Observability",
+      "days_range": "141–155",
+      "hours": 40,
+      "day_count": 15,
+      "description": "Code that only runs on your laptop isn't a backend system. This phase covers what it takes to ship, run, and actually see what your code is doing in production.",
+      "days": [
+        {
+          "day": 141,
+          "focus_topic": "Docker Fundamentals",
+          "what_to_learn": "Images vs containers; Dockerfile basics; layer caching.",
+          "practice_task": "Dockerize your Spring Boot app."
+        },
+        {
+          "day": 142,
+          "focus_topic": "Multi-Stage Builds & Image Optimization",
+          "what_to_learn": "Reducing image size; JRE-slim/distroless base images.",
+          "practice_task": "Optimize your Dockerfile with a multi-stage build."
+        },
+        {
+          "day": 143,
+          "focus_topic": "Docker Compose",
+          "what_to_learn": "Orchestrating app + DB + Redis + Kafka locally as one stack.",
+          "practice_task": "Write a docker-compose.yml that runs your full local stack."
+        },
+        {
+          "day": 144,
+          "focus_topic": "Kubernetes I — Core Objects",
+          "what_to_learn": "Pods, Deployments, ReplicaSets, Services.",
+          "practice_task": "Deploy your app to a local cluster (minikube or kind)."
+        },
+        {
+          "day": 145,
+          "focus_topic": "Kubernetes II — Config & Secrets",
+          "what_to_learn": "ConfigMaps, Secrets, environment injection.",
+          "practice_task": "Externalize your app's config/secrets into Kubernetes resources."
+        },
+        {
+          "day": 146,
+          "focus_topic": "Kubernetes III — Traffic & Scaling",
+          "what_to_learn": "Ingress, Horizontal Pod Autoscaler, liveness/readiness probes.",
+          "practice_task": "Add health probes and configure autoscaling for your deployment."
+        },
+        {
+          "day": 147,
+          "focus_topic": "CI Fundamentals",
+          "what_to_learn": "Pipeline stages (build/test/package); GitHub Actions basics.",
+          "practice_task": "Write a CI pipeline that builds and tests on every push."
+        },
+        {
+          "day": 148,
+          "focus_topic": "CD Fundamentals",
+          "what_to_learn": "Deployment strategies: blue-green, canary, rolling.",
+          "practice_task": "Extend CI to CD: build an image and deploy it automatically."
+        },
+        {
+          "day": 149,
+          "focus_topic": "Monitoring Fundamentals",
+          "what_to_learn": "The four golden signals: latency, traffic, errors, saturation.",
+          "practice_task": "List the golden signals you would monitor for your app, and why."
+        },
+        {
+          "day": 150,
+          "focus_topic": "Metrics with Prometheus & Micrometer",
+          "what_to_learn": "Exposing and scraping custom application metrics.",
+          "practice_task": "Expose a custom business metric from your app and scrape it with Prometheus."
+        },
+        {
+          "day": 151,
+          "focus_topic": "Visualization with Grafana",
+          "what_to_learn": "Building dashboards; basic alerting.",
+          "practice_task": "Build a Grafana dashboard for your app's key metrics."
+        },
+        {
+          "day": 152,
+          "focus_topic": "Centralized Logging",
+          "what_to_learn": "ELK/EFK or Loki-style structured log aggregation.",
+          "practice_task": "Ship your app's logs to a centralized logging stack."
+        },
+        {
+          "day": 153,
+          "focus_topic": "Alerting & Incident Response Basics",
+          "what_to_learn": "SLIs/SLOs/SLAs; on-call fundamentals; runbooks.",
+          "practice_task": "Define SLOs for your app and write one sample incident runbook."
+        },
+        {
+          "day": 154,
+          "focus_topic": "Infrastructure as Code Intro",
+          "what_to_learn": "Why IaC matters; Terraform basics.",
+          "practice_task": "Write a minimal Terraform script that provisions one resource."
+        },
+        {
+          "day": 155,
+          "focus_topic": "Checkpoint",
+          "what_to_learn": "Full observability, live.",
+          "practice_task": "Get metrics + logs + tracing all running together for your microservices project."
+        }
+      ]
+    },
+    {
+      "phase_number": 11,
+      "title": "System Design Mastery",
+      "days_range": "156–170",
+      "hours": 40,
+      "day_count": 15,
+      "description": "This phase turns everything you've built into the ability to design systems from a blank page — the exact skill senior/staff interviews test, and the one most '10-year' engineers never deliberately trained.",
+      "days": [
+        {
+          "day": 156,
+          "focus_topic": "System Design Fundamentals",
+          "what_to_learn": "Functional vs non-functional requirements; back-of-envelope estimation.",
+          "practice_task": "Do a full capacity estimation (QPS, storage) for a URL shortener."
+        },
+        {
+          "day": 157,
+          "focus_topic": "Scalability Fundamentals",
+          "what_to_learn": "Vertical vs horizontal scaling; why statelessness enables horizontal scale.",
+          "practice_task": "Find the state in your app that blocks horizontal scaling, and remove it."
+        },
+        {
+          "day": 158,
+          "focus_topic": "Load Balancing",
+          "what_to_learn": "Algorithms (round robin, least connections, consistent hashing); L4 vs L7.",
+          "practice_task": "Explain your load-balancer choice for a stateful vs a stateless service."
+        },
+        {
+          "day": 159,
+          "focus_topic": "Caching at Scale & CDNs",
+          "what_to_learn": "Edge caching; multi-layer cache hierarchies.",
+          "practice_task": "Design a caching layer for a globally-distributed, read-heavy API."
+        },
+        {
+          "day": 160,
+          "focus_topic": "Database Scaling Deep Dive",
+          "what_to_learn": "Combining sharding, replication, and caching coherently.",
+          "practice_task": "Design the data layer for a system handling 1M writes/day."
+        },
+        {
+          "day": 161,
+          "focus_topic": "Consistent Hashing",
+          "what_to_learn": "Theory and use in distributed caches and sharding.",
+          "practice_task": "Implement a simple consistent-hashing ring in code."
+        },
+        {
+          "day": 162,
+          "focus_topic": "System Design: URL Shortener",
+          "what_to_learn": "Full design exercise — API, schema, scaling, edge cases.",
+          "practice_task": "Write a complete design doc for a URL shortener."
+        },
+        {
+          "day": 163,
+          "focus_topic": "System Design: Rate Limiter",
+          "what_to_learn": "Full design exercise — distributed rate limiting.",
+          "practice_task": "Design a distributed rate limiter: algorithm + storage choice + justification."
+        },
+        {
+          "day": 164,
+          "focus_topic": "System Design: Notification System",
+          "what_to_learn": "Full design exercise — fan-out delivery.",
+          "practice_task": "Design a fan-out notification system (push/email/SMS) backed by queues."
+        },
+        {
+          "day": 165,
+          "focus_topic": "System Design: News Feed",
+          "what_to_learn": "Full design exercise — feed generation strategies.",
+          "practice_task": "Design feed generation using push, pull, and hybrid models — pick one and justify it."
+        },
+        {
+          "day": 166,
+          "focus_topic": "System Design: Chat/Messaging",
+          "what_to_learn": "Full design exercise — real-time delivery.",
+          "practice_task": "Design a real-time messaging system: WebSockets, ordering, delivery status."
+        },
+        {
+          "day": 167,
+          "focus_topic": "System Design: E-Commerce Orders",
+          "what_to_learn": "Full design exercise combining inventory, payment, and Saga.",
+          "practice_task": "Write a full design doc for an order system using the Saga pattern from Phase 9."
+        },
+        {
+          "day": 168,
+          "focus_topic": "System Design: Distributed File Storage",
+          "what_to_learn": "Full design exercise, S3-like, high level.",
+          "practice_task": "Design doc covering replication, consistency, and the metadata service."
+        },
+        {
+          "day": 169,
+          "focus_topic": "System Design: Gateway + Auth at Scale",
+          "what_to_learn": "Combines Phases 7–9 into one design.",
+          "practice_task": "Write a full design doc for a rate-limited API gateway with centralized auth."
+        },
+        {
+          "day": 170,
+          "focus_topic": "Mock System Design Interview",
+          "what_to_learn": "Timeboxed practice under interview conditions.",
+          "practice_task": "Pick a new prompt, timebox 45 minutes, then self-critique against a rubric you define first."
+        }
+      ]
+    },
+    {
+      "phase_number": 12,
+      "title": "Performance Engineering & Advanced Architecture",
+      "days_range": "171–178",
+      "hours": 22,
+      "day_count": 8,
+      "description": "The final knowledge layer: making systems fast under real load, and documenting the trade-offs behind every decision — the habits that separate engineers people trust with critical systems.",
+      "days": [
+        {
+          "day": 171,
+          "focus_topic": "JVM Performance Tuning",
+          "what_to_learn": "Heap sizing, GC selection by workload type, key tuning flags.",
+          "practice_task": "Tune JVM flags for your app under a simulated load."
+        },
+        {
+          "day": 172,
+          "focus_topic": "Profiling Tools",
+          "what_to_learn": "JFR, async-profiler, VisualVM — finding real CPU/memory hotspots.",
+          "practice_task": "Profile your app under load and identify one concrete bottleneck."
+        },
+        {
+          "day": 173,
+          "focus_topic": "Load Testing",
+          "what_to_learn": "JMeter/Gatling/k6 basics; designing realistic load tests.",
+          "practice_task": "Write and run a load test, capturing p50/p95/p99 latency."
+        },
+        {
+          "day": 174,
+          "focus_topic": "Fixing Bottlenecks",
+          "what_to_learn": "Turning profiling + load-test data into a targeted fix.",
+          "practice_task": "Fix the Day 172–173 bottleneck, retest, and document the improvement."
+        },
+        {
+          "day": 175,
+          "focus_topic": "CQRS & Event Sourcing Concepts",
+          "what_to_learn": "When they help; the complexity they add; when to avoid them.",
+          "practice_task": "Sketch a CQRS split for one feature of your project."
+        },
+        {
+          "day": 176,
+          "focus_topic": "API Evolution & Deprecation",
+          "what_to_learn": "Backward compatibility strategy; deprecating an API version responsibly.",
+          "practice_task": "Write a deprecation plan for one API version."
+        },
+        {
+          "day": 177,
+          "focus_topic": "Code Review Mastery",
+          "what_to_learn": "What elite reviewers actually check for; giving and receiving feedback well.",
+          "practice_task": "Do a formal self-review of your entire codebase against a checklist you write."
+        },
+        {
+          "day": 178,
+          "focus_topic": "Architecture Decision Records",
+          "what_to_learn": "Documenting the \"why\" behind technical decisions, not just the \"what.\"",
+          "practice_task": "Write 3 ADRs for key decisions made across this roadmap."
+        }
+      ]
+    },
+    {
+      "phase_number": 13,
+      "title": "Capstone Project & Interview Readiness",
+      "days_range": "179–200",
+      "hours": 55,
+      "day_count": 22,
+      "description": "Everything converges here. You'll design and build a multi-service, production-shaped system end to end — auth, catalog, orders, payments, notifications — then prove you can defend every decision in it under interview conditions.",
+      "days": [
+        {
+          "day": 179,
+          "focus_topic": "Capstone Kickoff",
+          "what_to_learn": "Define scope: a multi-service system (e.g. e-commerce platform or ride-hailing backend).",
+          "practice_task": "Write full requirements plus an architecture diagram for the capstone."
+        },
+        {
+          "day": 180,
+          "focus_topic": "Data & Service Boundaries",
+          "what_to_learn": "Finalize schema and API contracts per service.",
+          "practice_task": "Produce an OpenAPI contract for each planned service."
+        },
+        {
+          "day": 181,
+          "focus_topic": "Build: Auth/User Service",
+          "what_to_learn": "JWT, OAuth2, RBAC — applying Phase 7 in full.",
+          "practice_task": "Implement and test the auth/user service."
+        },
+        {
+          "day": 182,
+          "focus_topic": "Build: Catalog Service",
+          "what_to_learn": "JPA, caching, search/filter — applying Phase 5.",
+          "practice_task": "Implement and test the catalog/product service."
+        },
+        {
+          "day": 183,
+          "focus_topic": "Build: Order Service",
+          "what_to_learn": "Saga orchestration, outbox pattern — applying Phase 9.",
+          "practice_task": "Implement and test the order service."
+        },
+        {
+          "day": 184,
+          "focus_topic": "Build: Payment Service",
+          "what_to_learn": "Idempotency, simulated external payment API.",
+          "practice_task": "Implement and test the payment service."
+        },
+        {
+          "day": 185,
+          "focus_topic": "Build: Notification Service",
+          "what_to_learn": "Kafka consumer, async email/SMS mock — applying Phase 8.",
+          "practice_task": "Implement and test the notification service."
+        },
+        {
+          "day": 186,
+          "focus_topic": "End-to-End Wiring",
+          "what_to_learn": "Connect all services via Kafka events and Saga orchestration.",
+          "practice_task": "Get one full checkout flow working across all five services."
+        },
+        {
+          "day": 187,
+          "focus_topic": "Gateway & Discovery",
+          "what_to_learn": "API Gateway, service discovery, config server — applying Phase 9.",
+          "practice_task": "Route all external traffic through a single gateway."
+        },
+        {
+          "day": 188,
+          "focus_topic": "Resilience Under Failure",
+          "what_to_learn": "Circuit breakers, retries, bulkheads across service calls.",
+          "practice_task": "Kill one service mid-flow and verify the system degrades gracefully."
+        },
+        {
+          "day": 189,
+          "focus_topic": "Full Observability",
+          "what_to_learn": "Metrics, logs, and tracing across every service.",
+          "practice_task": "Trace one request end-to-end through all five services."
+        },
+        {
+          "day": 190,
+          "focus_topic": "Containerize Everything",
+          "what_to_learn": "Docker Compose for the full stack.",
+          "practice_task": "Get the entire system running with a single command."
+        },
+        {
+          "day": 191,
+          "focus_topic": "Deploy to Kubernetes",
+          "what_to_learn": "Autoscaling, health probes, full local-cluster deployment.",
+          "practice_task": "Get the full capstone running on Kubernetes."
+        },
+        {
+          "day": 192,
+          "focus_topic": "CI/CD for All Services",
+          "what_to_learn": "Automated build/test/deploy pipeline per service.",
+          "practice_task": "Wire up a working CI/CD pipeline for the whole capstone."
+        },
+        {
+          "day": 193,
+          "focus_topic": "Load Test the Full System",
+          "what_to_learn": "Find and fix real bottlenecks under load.",
+          "practice_task": "Produce a performance report: p50/p95/p99 latency and throughput."
+        },
+        {
+          "day": 194,
+          "focus_topic": "Full Security Audit",
+          "what_to_learn": "OWASP checklist, secrets, HTTPS — across every service.",
+          "practice_task": "Fix every finding from a full-system security audit."
+        },
+        {
+          "day": 195,
+          "focus_topic": "Technical Documentation",
+          "what_to_learn": "Architecture docs, ADRs, and a real README.",
+          "practice_task": "Complete the full documentation package for the capstone."
+        },
+        {
+          "day": 196,
+          "focus_topic": "Mock System Design Interview #2",
+          "what_to_learn": "New prompt, 45-minute timebox.",
+          "practice_task": "Complete the mock, then write a gap list against your rubric."
+        },
+        {
+          "day": 197,
+          "focus_topic": "Mock Coding/DSA Interview",
+          "what_to_learn": "Two medium problems, 45-minute timebox.",
+          "practice_task": "Solve both, then review your approach against an ideal solution."
+        },
+        {
+          "day": 198,
+          "focus_topic": "Mock \"Deep Dive on Your Project\" Interview",
+          "what_to_learn": "Practice explaining and defending capstone trade-offs out loud.",
+          "practice_task": "Record yourself answering \"walk me through your architecture.\""
+        },
+        {
+          "day": 199,
+          "focus_topic": "Portfolio & Resume Polish",
+          "what_to_learn": "GitHub README quality; resume bullets that quantify impact.",
+          "practice_task": "Finalize your GitHub repo and write resume bullets for the capstone."
+        },
+        {
+          "day": 200,
+          "focus_topic": "Retrospective & Forward Plan",
+          "what_to_learn": "What's next: OSS contribution, staying current, advanced specialization.",
+          "practice_task": "Write your own 90-day post-roadmap growth plan."
+        }
+      ]
+    }
+  ],
+  "beyond_day_200": [
+    "Read the source code of Spring Core and Spring Boot itself — not just docs. Understanding a framework's own implementation is a different tier of knowledge than using it.",
+    "Contribute to an open-source Java/Spring project — real code review from experienced maintainers accelerates growth faster than solo study.",
+    "Go deeper into one specialization: high-performance systems, distributed databases, or security — elite engineers are usually T-shaped, not uniformly deep everywhere.",
+    "Follow the release notes of Java and Spring Boot each release — staying current is itself a skill.",
+    "Keep doing mock interviews (system design and coding) monthly, even once employed — it keeps the muscle sharp."
+  ]
+}
