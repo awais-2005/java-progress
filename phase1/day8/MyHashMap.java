@@ -51,6 +51,7 @@ public class MyHashMap<K, V> {
             tableSize = DEFAULT_CAPACITY;
         table = new Node[tableSize];
         capacity = tableSize;
+        loadFactor = DEFAULT_LOAD_FACTOR;
     }
 
     public MyHashMap(int capacity, float loadFactor) {
@@ -120,9 +121,10 @@ public class MyHashMap<K, V> {
             while (node1 != null) {
                 Node<K, V> node2 = newtable[node1.getHash() % capacity];
                 if (node2 == null) {
-                    newtable[node1.getHash() % capacity] = node1;
+                    node2 = node1;
                     node1 = node1.next;
-                    newtable[node1.getHash() % capacity].next = null;
+                    node2.next = null;
+                    newtable[node2.getHash() % capacity] = node2;
                 } else if (node2.next == null) {
                     node2.next = node1;
                     node1 = node1.next;
