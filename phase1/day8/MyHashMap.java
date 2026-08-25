@@ -42,6 +42,7 @@ public class MyHashMap<K, V> {
 
     public MyHashMap() {
         table = new Node[DEFAULT_CAPACITY];
+        capacity = DEFAULT_CAPACITY;
         loadFactor = DEFAULT_LOAD_FACTOR;
     }
 
@@ -74,15 +75,30 @@ public class MyHashMap<K, V> {
     }
 
     private void putVal(K key, V value) {
-        Node<K, V> node = table[getHash(key) % capacity];
-        Node<K, V> newNode = new Node<K, V>(key, value, getHash(key));
-        if (node == null) {
-            table[getHash(key) % capacity] = newNode;
-        } else {
-            while (node.next != null)
-                node = node.next;
-            node.next = newNode;
+        Node<K, V> bucket = table[getHash(key) % capacity];
+
+        if (bucket == null) {
+            table[getHash(key) % capacity] = new Node<>(key, value, getHash(key));
+            size++; // increment size after successful insertion
+            return;
         }
+
+        Node<K, V> prev = null;
+
+        while (bucket != null && !bucket.getKey().equals(key)) {
+            prev = bucket;
+            bucket = bucket.next;
+        }
+
+        if (bucket == null) {
+            prev.next = new Node<>(key, value, getHash(key));
+            size++; // increment size after successful insertion
+        } else
+            bucket.setValue(value);
+    }
+
+    public int size() {
+        return size;
     }
 
     public V get(K key) {
@@ -98,6 +114,7 @@ public class MyHashMap<K, V> {
     private void resize() {
         capacity *= DEFAULT_RESIZE_BY;
         Node<K, V>[] newtable = new Node[(int) (capacity)];
+        Timer exitTimer = new Timer(3000, "Something went wrong while resize().");
         for (int i = 0; i < table.length; i++) {
             Node<K, V> node1 = table[i];
             while (node1 != null) {
@@ -105,16 +122,60 @@ public class MyHashMap<K, V> {
                 if (node2 == null) {
                     newtable[node1.getHash() % capacity] = node1;
                     node1 = node1.next;
+                    newtable[node1.getHash() % capacity].next = null;
                 } else if (node2.next == null) {
                     node2.next = node1;
                     node1 = node1.next;
+                    node2.next.next = null;
                 } else {
                     node2 = node2.next;
                 }
-
             }
         }
         table = newtable;
+        exitTimer.dontExit();
+        exitTimer.interrupt();
     }
 
+}
+
+class Timer extends Thread {
+    private final int milliseconds;
+    private final String exitMessage;
+    private boolean exit = true;
+
+    Timer(int milliseconds) {
+        if (milliseconds < 100)
+            throw new IllegalArgumentException("Atleast enter 100ms");
+        this.milliseconds = milliseconds;
+        exitMessage = "Time out";
+    }
+
+    Timer(int milliseconds, String exitMessage) {
+        if (milliseconds < 100)
+            throw new IllegalArgumentException("Atleast enter 100ms");
+        this.milliseconds = milliseconds;
+        this.exitMessage = exitMessage;
+    }
+
+    @Override
+    public void run() {
+        if (milliseconds == 0)
+            return;
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+            e.getStackTrace();
+        }
+
+        if (exit) {
+            System.out.println(exitMessage);
+            System.exit(0);
+        }
+    }
+
+    public void dontExit() {
+        this.exit = false;
+    }
 }
