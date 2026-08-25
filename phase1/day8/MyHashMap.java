@@ -115,16 +115,16 @@ public class MyHashMap<K, V> {
     private void resize() {
         capacity *= DEFAULT_RESIZE_BY;
         Node<K, V>[] newtable = new Node[(int) (capacity)];
-        Timer exitTimer = new Timer(3000, "Something went wrong while resize().");
         for (int i = 0; i < table.length; i++) {
             Node<K, V> node1 = table[i];
             while (node1 != null) {
-                Node<K, V> node2 = newtable[node1.getHash() % capacity];
+                int bucketIndex = node1.getHash() % capacity;
+                Node<K, V> node2 = newtable[bucketIndex];
                 if (node2 == null) {
                     node2 = node1;
                     node1 = node1.next;
                     node2.next = null;
-                    newtable[node2.getHash() % capacity] = node2;
+                    newtable[bucketIndex] = node2;
                 } else if (node2.next == null) {
                     node2.next = node1;
                     node1 = node1.next;
@@ -135,49 +135,6 @@ public class MyHashMap<K, V> {
             }
         }
         table = newtable;
-        exitTimer.dontExit();
-        exitTimer.interrupt();
     }
 
-}
-
-class Timer extends Thread {
-    private final int milliseconds;
-    private final String exitMessage;
-    private boolean exit = true;
-
-    Timer(int milliseconds) {
-        if (milliseconds < 100)
-            throw new IllegalArgumentException("Atleast enter 100ms");
-        this.milliseconds = milliseconds;
-        exitMessage = "Time out";
-    }
-
-    Timer(int milliseconds, String exitMessage) {
-        if (milliseconds < 100)
-            throw new IllegalArgumentException("Atleast enter 100ms");
-        this.milliseconds = milliseconds;
-        this.exitMessage = exitMessage;
-    }
-
-    @Override
-    public void run() {
-        if (milliseconds == 0)
-            return;
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
-        }
-
-        if (exit) {
-            System.out.println(exitMessage);
-            System.exit(0);
-        }
-    }
-
-    public void dontExit() {
-        this.exit = false;
-    }
 }
